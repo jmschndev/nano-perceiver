@@ -44,8 +44,9 @@ if __name__ == "__main__":
     torch.manual_seed(1337)
 
     cfg = _get_config(
-        max_iters=5000,
+        max_iters=50000,
         eval_interval=100,
+        eval_gen_interval=1000,
         batch_size=16,
         query_size=64,
         block_size=256,
@@ -79,6 +80,7 @@ if __name__ == "__main__":
         if it % cfg.eval_interval == 0 or it == cfg.max_iters - 1:
             losses = estimate_loss(cfg.eval_iters)
             print(f"loss@{it}: train {losses['train']:.4f},  loss {losses['val']:.4f}")
+        if it % cfg.eval_gen_interval == 0 or it == cfg.max_iters - 1:
             # generate from the model
             context = torch.zeros((1, 1), dtype=torch.long, device=cfg.device)
             print(decode(m.generate(context, max_new_tokens=200)[0].tolist()))

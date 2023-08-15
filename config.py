@@ -10,6 +10,7 @@ class Config:
 
     max_iters: int = 1000
     eval_interval: int = 100
+    eval_gen_interval: int = 1000
     eval_iters: int = 200
 
     learning_rate: float = 1e-3
